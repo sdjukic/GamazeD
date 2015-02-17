@@ -1,14 +1,10 @@
-
 from math import sqrt
 
 class Point(object):
      """Class that defines Point structure in 2D Cartesian space."""
-     def __init__(self, *initial_data, **kwargs):
-         for dictionary in initial_data:
-             for key in dictionary:
-                 setattr(self, key, dictionary[key])
-         for key in kwargs:
-             setattr(self, key, kwargs[key])
+     def __init__(self, *args):
+         self._x_coordinate = args[0]
+         self._y_coordinate = args[1]
 
      def get_x(self):
          return self._x_coordinate
@@ -28,16 +24,15 @@ class Point(object):
 
 class LineSegment(object):
     """Class that defines Line Segment in 2D Cartesian space."""
-    def __init__(self, *initial_data, **kwargs):
+    def __init__(self, *points):
         self.end_points = []
-        for dictionary in initial_data:
-            for key in dictionary:
-              if key == 'Point':
-                self.end_points.append(Point(dictionary[key]))
-       
-        #self._coefficient_a = point_two.get_y() - point_one.get_y()
-        #self._coefficient_b = point_one.get_x() - point_two.get_x()
-        #self._coefficient_c = self._coefficient_a * point_one.get_x() + self._coefficient_b * point_one.get_y()
+        self.end_points.append(Point(points[0][0], points[0][1]))
+        self.end_points.append(Point(points[1][0], points[1][1]))
+        self.segment_length = self.end_points[0].euclidean_distance(self.end_points[1])
+        
+        self._coefficient_a = self.end_points[1].get_y() - self.end_points[0].get_y()
+        self._coefficient_b = self.end_points[0].get_x() - self.end_points[1].get_x()
+        self._coefficient_c = self._coefficient_a * self.end_points[0].get_x() + self._coefficient_b * self.end_points[0].get_y()
 
     def do_intersect(self, other):
     
@@ -50,3 +45,12 @@ class LineSegment(object):
             intersection_y = (other._coefficient_c * self._coefficient_a - self._coefficient_c * other._coefficient_a) / determinant
             
         return True, Point(intersection_x, intersection_y)
+
+    
+    def _in_segment(self, point):
+        """Function that checks whether point is in the segment."""
+        distance_from_endpoints = 0
+        for p in self.end_points:
+            distance_from_endpoints += point.euclidean_distance(p)
+            
+        return abs(distance_from_endpoints - self.segment_length) < 0.05

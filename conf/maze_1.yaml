@@ -1,24 +1,13 @@
 --- 
 Ball:
-    Point:
-       _x_coordinate: 5
-       _y_coordinate: 5
-    size: 10
+    - [5, 10, 20]
 
-# Maze
-maze_height: 250
-maze_length: 250
-walls: 
-    - Point:
-        _x_coordinate: 0
-        _y_coordinate: 0
-    - Point:
-        _x_coordinate: 0
-        _y_coordinate: 250
-    - Point:
-        _x_coordinate: 0
-        _y_coordinate: 0
-    - Point:
-        _x_coordinate: 250
-        _y_coordinate: 0
+Target:
+    - [240, 240]
+
+#maze_height: 250
+#maze_length: 250
+Wall: 
+    - [[0, 0], [0, 250]]
+    - [[0, 0], [250, 0]]
     

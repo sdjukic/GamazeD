@@ -2,12 +2,14 @@ from Geometry import Point
 
 class Ball(object):
     """Class that represents ball in our maze."""
-    def __init__(self, *initial_data, **kwargs):
-        for dictionary in initial_data:
-            for key in dictionary:
-                if key == 'Point':
-                    self.position = Point(dictionary[key])
-                elif key == 'size':
-                    self.size = dictionary[key]
-            for key in kwargs:
-                setattr(self, key, kwargs[key])
+    def __init__(self, size = 0, *position):
+        self.size = size
+        self.position = Point(position[0], position[1])
+
+    
+    def get_position(self):
+        return self.position
+        
+    
+    def change_position(self, new_position):
+        self.position = new_position
