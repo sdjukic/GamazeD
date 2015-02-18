@@ -11,5 +11,9 @@ s.listen(5)                 # Now wait for client connection.
 while True:
     c, addr = s.accept()     # Establish connection with client.
     print 'Got connection from', addr
-    c.send('Thank you for connecting')
+    c.send('Welcome to GamazeD')
+    
+    c_message = c.receive(1024)
+    print("Received ", c_message)
+    
     c.close()                # Close the connection
